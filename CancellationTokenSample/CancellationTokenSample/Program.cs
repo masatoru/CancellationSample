@@ -12,9 +12,13 @@ namespace CancellationTokenSample
         {
             var cts = new CancellationTokenSource();
             Task.Run(async () => await Test(cts.Token), cts.Token);
+
+            // Enterでキャンセル実行
             Console.ReadLine();
             cts.Cancel();
             Console.WriteLine("Cancel...");
+
+            // Enterで終了
             Console.ReadLine();
         }
 
@@ -24,6 +28,7 @@ namespace CancellationTokenSample
             var wr = HttpWebRequest.Create(url);
             Console.WriteLine($"Try connect {url}");
 
+            // Cancelを登録する
             token.Register(() =>
             {
                 Console.WriteLine("Query cancelled");
